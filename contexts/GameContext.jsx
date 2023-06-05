@@ -1,4 +1,4 @@
-import { createContext, useContext, useRef } from "react";
+import { createContext, useContext, useRef, useState } from "react";
 
 const InGameContext = createContext()
 
@@ -11,7 +11,7 @@ export function InGameProvider({ children }) {
     const playerRot = useRef([0, 0, 0])
     const cameraPosYZ = useRef([0, 8])
     const timing = useRef(0)
-    const isWinning = useRef(false)
+    const [isWinning, setIsWinning] = useState(false)
 
     function movePlayerPos(position) {
         playerPos.current = position
@@ -25,10 +25,6 @@ export function InGameProvider({ children }) {
         cameraPosYZ.current = position
     }
 
-    function won() {
-        isWinning.current = true
-    }
-
     const value = {
         playerPos,
         movePlayerPos,
@@ -38,7 +34,7 @@ export function InGameProvider({ children }) {
         cameraPosYZ,
         timing,
         isWinning,
-        won
+        setIsWinning,
     }
 
     return (

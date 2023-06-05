@@ -76,10 +76,10 @@ export function Control({ children, isHold, moveSetter, bb, miniMap, mapHelper, 
     const torusRef = children.props.playerRef
     const cameraRef = children.props.cameraRef
 
-    const { playerPos, playerRot, cameraPosYZ } = useGameContext()
+    const { playerPos, playerRot, cameraPosYZ, isWinning, setIsWinning } = useGameContext()
 
     const timerRun = useRef(false)
-    const isWinning = useRef(false)
+    // const isWinning = useRef(false)
     const onLift = useRef([])
     const onArrow = useRef(null)
     const onArrowZ = useRef(0)
@@ -131,7 +131,7 @@ export function Control({ children, isHold, moveSetter, bb, miniMap, mapHelper, 
 
     function playerMove(scaledDelta) {
         /* speed */
-        const walkSpeed = 0.4 * scaledDelta;
+        const walkSpeed = 0.2 * scaledDelta;
 
         /* move playerBox in x axis */
         if (currentMove.onward) {
@@ -190,12 +190,27 @@ export function Control({ children, isHold, moveSetter, bb, miniMap, mapHelper, 
         }
 
         if (torusRef.current.position.x > finishLine) {
-            isWinning.current = true;
+            // isWinning.current = true;
+            setIsWinning(true)
         }
         if (torusRef.current.position.x > 0 && torusRef.current.position.z > 0 && torusRef.current.position.z < maxZ) {
             timerRun.current = true;
         }
 
+    }
+
+    const v0 = useRef(0.3)
+    const v = useRef(v0.current)
+    function winningAnim(delta) {
+        const a = 0.01
+        if (torusRef.current.position.y < 1.5) {
+            v.current = v0.current
+            torusRef.current.position.y = 1.5
+        }
+        else {
+            v.current -= a * delta
+            torusRef.current.position.y += v.current
+        }
     }
 
     useFrame((_, delta) => {
@@ -204,7 +219,7 @@ export function Control({ children, isHold, moveSetter, bb, miniMap, mapHelper, 
         }
 
         const scaledDelta = delta * 61
-        
+
         playerMove(scaledDelta)
         miniMap.current.style.transform = `translate3d(${-torusRef.current.position.x * mapScale}px, ${-torusRef.current.position.z * mapScale}px, 0)`
 
@@ -221,7 +236,8 @@ export function Control({ children, isHold, moveSetter, bb, miniMap, mapHelper, 
         onArrow.current = arrowProps[0]
         onArrowZ.current = arrowProps[1]
 
-        if (timerRun.current && !isWinning.current) timer(delta)
+        if (timerRun.current && !isWinning) timer(delta)
+        else if (isWinning) winningAnim(scaledDelta)
     })
 
     // console.log('player rerender')

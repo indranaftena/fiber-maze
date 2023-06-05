@@ -11,7 +11,7 @@ import { Timer } from './Timer'
 import { Control } from './Control'
 import { TouchInput } from './TouchInput'
 import { useGameContext } from '../contexts/GameContext'
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export function GameView({ mazeMatrix, params }) {
   const isTouch = window.navigator.maxTouchPoints > 0
@@ -22,10 +22,10 @@ export function GameView({ mazeMatrix, params }) {
     return (() => console.log('no setRotate function'))
   })
 
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   const [isHold, setIsHold] = useState(true)
 
-  const { timing, movePlayerRot, moveCameraPosYZ } = useGameContext()
+  const { timing, movePlayerRot, moveCameraPosYZ, isWinning } = useGameContext()
 
   const playerRef = useRef(null)
   const cameraRef = useRef(null)
@@ -121,7 +121,7 @@ export function GameView({ mazeMatrix, params }) {
   return (
     <>
       <div id='canvas-container' onClick={handleArrow}>
-        <Canvas ref={mouseControl}>
+        <Canvas ref={mouseControl} gl={{ antialias: false }}>
           <ambientLight intensity={0.7} />
           <pointLight position={[10000, 1000, 10000]} intensity={0.9} />
           <pointLight position={[10000, 0, -10000]} intensity={0.4} />
@@ -139,12 +139,34 @@ export function GameView({ mazeMatrix, params }) {
       </div>
       <MiniMap mapRef={mapRef} bBoxes={bBoxes} mapScale={mazeParams.map.SCALE}
         mapEachRef={mapEachRef} mapHelperRef={mapHelperRef} floorIndex={floorIdc} />
-      <Timer timerRef={timerRef} />
+      {!isWinning && <Timer timerRef={timerRef} />}
       <div id='crosshair'>+</div>
       {isTouch && <TouchInput moveSetter={move} setRotateRate={rotate}
         arrowFunc={handleArrow} />}
-      {(isHold && !isTouch ) && <div id='starter'>
-        <div onClick={playGame} id='play-button'>Play</div>
+      {(isHold && !isTouch && !isWinning) && <div id='starter' className='dialog-box'>
+        <div className='dialog-message'>
+          <h1>How to Play</h1>
+          <div>Start from entrance in the northeast and find the correct route to exit in the southwest</div>
+          <p>Direct the donut orientation using mouse</p>
+          <p>Move using keyboard:</p>
+          <ul>
+            <li>w : move forward</li>
+            <li>s : move backward</li>
+            <li>a : move left</li>
+            <li>d : move right</li>
+            <li>esc : get your cursor back</li>
+          </ul>
+          <p>Click 'Play' to start!</p>
+        </div>
+        <div onClick={playGame} className='dialog-btn big-txt'>Play</div>
+      </div>}
+      {isWinning && <div id='win-message' className='dialog-box'>
+        <div className='dialog-message'>
+          <h1>You win!</h1>
+          <div className='center big-txt'>You finish in</div>
+          <div ref={timerRef} className='center big-txt'></div>
+        </div>
+        <div onClick={() => navigate("/")} className='dialog-btn big-txt'>Go Home</div>
       </div>}
     </>
   )

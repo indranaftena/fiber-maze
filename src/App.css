@@ -30,6 +30,10 @@ section.menu {
   text-align: center;
 }
 
+.big-txt {
+  font-size: 2rem;
+}
+
 .level {
   margin: 1rem 0;
   padding: 1rem;
@@ -109,7 +113,6 @@ footer {
   padding: 0.5rem 1rem;
   top: 0;
   left: 80px;
-  font-size: 2em;
   font-family: 'Courier New', Courier, monospace;
   color: white;
   text-shadow: 0 0 3px black;
@@ -182,14 +185,6 @@ footer {
   transform: translate(0, -50%);
 }
 
-#pause-btn {
-  padding: 4px 8px;
-  right: 180px;
-  z-index: 3;
-  bottom: 2rem;
-  font-size: 2rem;
-}
-
 #joystick {
   border: 2px solid #ffffff;
   border-radius: 50%;
@@ -214,35 +209,46 @@ footer {
   transform: translate(-50%, -50%);
 }
 
-#starter {
+.dialog-box {
   box-sizing: border-box;
   position: absolute;
-  display: flex;
-  /* display: none; */
-  justify-content: center;
-  align-items: end;
+  padding: 1rem;
   width: 100vw;
   height: 100vh;
   z-index: 5;
-  padding-bottom: 8rem;
-  font-size: 3em;
-  color: white;
+}
+
+.dialog-message {
+  margin: 0.5rem auto 2rem auto;
+  min-width: 300px;
+  width: 80%;
+  height: 80%;
+  padding: 8px;
+  overflow-y: scroll;
+  /* background-color: rgba(0, 0, 0, 0.4); */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.dialog-message::-webkit-scrollbar {
+  display: none;
+}
+
+#starter {
   background-color: rgba(70, 70, 70, 0.7);
+  padding-bottom: 10%;
 }
 
-#play-button {
-  padding: 2rem;
-  background-color: darkgoldenrod;
-  cursor: pointer;
+#win-message {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding-bottom: 10%;
 }
 
-.play-btn {
-  padding: 2rem;
+.dialog-btn {
+  width: fit-content;
+  margin: 1rem auto;
+  padding: 6px 3rem;
   color: white;
   background-color: darkgoldenrod;
   cursor: pointer;
-}
-
-.play-btn:hover {
-  color: #d1d1d1;
 }
