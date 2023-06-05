@@ -11,7 +11,7 @@ export function Menu() {
     <div id="starter" className="dialog-box">
       <div className='dialog-message'>
         <h1>How to Play</h1>
-        <div>Start from entrance in the northeast and find the correct route to exit in the southwest</div>
+        <div>Start from entrance in the northwest and find the correct route to exit in the southeast</div>
         <p>Direct the donut orientation using virtual joystick on the right</p>
         <p>Move using arrow buttons on the left</p>
         <p>Click 'Play' to start!</p>

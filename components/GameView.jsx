@@ -51,6 +51,7 @@ export function GameView({ mazeMatrix, params }) {
   const floorIdc = useRef(null)
 
   const timerRef = useRef(null)
+  const timeDisplay = useRef('')
 
   const changeOrientation = useRotate(playerRef, cameraRef, movePlayerRot, moveCameraPosYZ, mapRef, mapHelperRef)
 
@@ -101,6 +102,7 @@ export function GameView({ mazeMatrix, params }) {
     const miliSeconds = Math.round(timing.current % 100)
 
     timerRef.current.innerHTML = `${minutes}&nbsp;:&nbsp;${seconds}&nbsp;:&nbsp;${miliSeconds}`
+    timeDisplay.current = `${minutes} : ${seconds} : ${miliSeconds}`
   }
 
   function setMapFloor() {
@@ -121,7 +123,7 @@ export function GameView({ mazeMatrix, params }) {
   return (
     <>
       <div id='canvas-container' onClick={handleArrow}>
-        <Canvas ref={mouseControl} gl={{ antialias: false }}>
+        <Canvas ref={mouseControl} gl={{ antialias: true }}>
           <ambientLight intensity={0.7} />
           <pointLight position={[10000, 1000, 10000]} intensity={0.9} />
           <pointLight position={[10000, 0, -10000]} intensity={0.4} />
@@ -146,7 +148,7 @@ export function GameView({ mazeMatrix, params }) {
       {(isHold && !isTouch && !isWinning) && <div id='starter' className='dialog-box'>
         <div className='dialog-message'>
           <h1>How to Play</h1>
-          <div>Start from entrance in the northeast and find the correct route to exit in the southwest</div>
+          <div>Start from entrance in the northwest and find the correct route to exit in the southeast</div>
           <p>Direct the donut orientation using mouse</p>
           <p>Move using keyboard:</p>
           <ul>
@@ -164,9 +166,13 @@ export function GameView({ mazeMatrix, params }) {
         <div className='dialog-message'>
           <h1>You win!</h1>
           <div className='center big-txt'>You finish in</div>
-          <div ref={timerRef} className='center big-txt'></div>
+          <div ref={timerRef} className='center big-txt'>{timeDisplay.current}</div>
         </div>
-        <div onClick={() => navigate("/")} className='dialog-btn big-txt'>Go Home</div>
+        {isTouch ?
+          <div onClick={() => navigate(-2)} className='dialog-btn big-txt'>Go Home</div>
+          :
+          <div onClick={() => navigate(-1)} className='dialog-btn big-txt'>Go Home</div>
+        }
       </div>}
     </>
   )

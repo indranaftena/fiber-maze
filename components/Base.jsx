@@ -12,7 +12,7 @@ export function Base({ size }) {
   const radius = Math.max(x, z) + yardDistance
 
   const renderer = useThree((state) => state.gl)
-  renderer.setPixelRatio(window.devicePixelRatio * 0.1)
+  renderer.setPixelRatio(window.devicePixelRatio * 1)
 
   const base = useRef()
   useEffect(() => {

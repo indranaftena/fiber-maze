@@ -211,6 +211,9 @@ export function Control({ children, isHold, moveSetter, bb, miniMap, mapHelper, 
             v.current -= a * delta
             torusRef.current.position.y += v.current
         }
+        if (isTouch) {
+            torusRef.current.rotation.y += 0.01
+        }
     }
 
     useFrame((_, delta) => {
