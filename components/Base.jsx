@@ -1,4 +1,3 @@
-import { useThree } from "@react-three/fiber"
 import { useEffect, useRef } from "react"
 
 export function Base({ size }) {
@@ -10,9 +9,6 @@ export function Base({ size }) {
   // const lengthZ = z + yardDistance
 
   const radius = Math.max(x, z) + yardDistance
-
-  const renderer = useThree((state) => state.gl)
-  renderer.setPixelRatio(window.devicePixelRatio * 1)
 
   const base = useRef()
   useEffect(() => {

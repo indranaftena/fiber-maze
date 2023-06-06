@@ -123,7 +123,7 @@ export function GameView({ mazeMatrix, params }) {
   return (
     <>
       <div id='canvas-container' onClick={handleArrow}>
-        <Canvas ref={mouseControl} gl={{ antialias: true }}>
+        <Canvas ref={mouseControl} gl={{ antialias: true }} dpr={1} >
           <ambientLight intensity={0.7} />
           <pointLight position={[10000, 1000, 10000]} intensity={0.9} />
           <pointLight position={[10000, 0, -10000]} intensity={0.4} />
@@ -164,7 +164,7 @@ export function GameView({ mazeMatrix, params }) {
       </div>}
       {isWinning && <div id='win-message' className='dialog-box'>
         <div className='dialog-message'>
-          <h1>You win!</h1>
+          <h1>Congratulation!</h1>
           <div className='center big-txt'>You finish in</div>
           <div ref={timerRef} className='center big-txt'>{timeDisplay.current}</div>
         </div>
