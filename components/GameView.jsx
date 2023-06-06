@@ -12,6 +12,7 @@ import { Control } from './Control'
 import { TouchInput } from './TouchInput'
 import { useGameContext } from '../contexts/GameContext'
 import { useNavigate } from 'react-router-dom'
+import { useGraphicContext } from '../contexts/GraphicContext'
 
 export function GameView({ mazeMatrix, params }) {
   const isTouch = window.navigator.maxTouchPoints > 0
@@ -26,6 +27,7 @@ export function GameView({ mazeMatrix, params }) {
   const [isHold, setIsHold] = useState(true)
 
   const { timing, movePlayerRot, moveCameraPosYZ, isWinning } = useGameContext()
+  const { dpr } = useGraphicContext()
 
   const playerRef = useRef(null)
   const cameraRef = useRef(null)
@@ -123,7 +125,7 @@ export function GameView({ mazeMatrix, params }) {
   return (
     <>
       <div id='canvas-container' onClick={handleArrow}>
-        <Canvas ref={mouseControl} gl={{ antialias: true }} dpr={1} >
+        <Canvas ref={mouseControl} gl={{ antialias: true }} dpr={dpr} >
           <ambientLight intensity={0.7} />
           <pointLight position={[10000, 1000, 10000]} intensity={0.9} />
           <pointLight position={[10000, 0, -10000]} intensity={0.4} />

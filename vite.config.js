@@ -14,6 +14,7 @@ export default defineConfig({
         "theme_color": "#242424",
         "background_color": "#242424",
         "display": "fullscreen",
+        "orientation": "landscape",
         "scope": "/",
         "start_url": "/",
         "name": "Donut Maze",

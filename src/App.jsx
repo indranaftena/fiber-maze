@@ -7,21 +7,24 @@ import { LevelThree } from '../pages/LevelThree'
 import { TryOut } from '../pages/TryOut'
 import { LevelOne } from '../pages/LevelOne'
 import { TheAngle } from '../pages/TheAngle'
+import { GraphicProvider } from '../contexts/GraphicContext'
 
 function App() {
 
   return (
     <>
       <BrowserRouter>
-        <Routes>
-          <Route path='/' Component={Home} />
-          <Route path='/try-out/*' Component={TryOut} />
-          <Route path='/level-one/*' Component={LevelOne} />
-          <Route path='/level-two/*' Component={LevelTwo} />
-          <Route path='/level-three/*' Component={LevelThree} />
-          <Route path='/the-angle/*' Component={TheAngle} />
-          <Route path='/random/*' Component={Random} />
-        </Routes>
+        <GraphicProvider>
+          <Routes>
+            <Route path='/' Component={Home} />
+            <Route path='/try-out/*' Component={TryOut} />
+            <Route path='/level-one/*' Component={LevelOne} />
+            <Route path='/level-two/*' Component={LevelTwo} />
+            <Route path='/level-three/*' Component={LevelThree} />
+            <Route path='/the-angle/*' Component={TheAngle} />
+            <Route path='/random/*' Component={Random} />
+          </Routes>
+        </GraphicProvider>
       </BrowserRouter>
     </>
   )
