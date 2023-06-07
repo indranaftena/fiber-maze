@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { InGameProvider } from "../contexts/GameContext";
 import { GameView } from '../components/GameView'
-import { Menu } from "../components/Menu";
+import { Menu } from "./Menu";
 import { MazeConstants, SkyConstant } from '../data/Constants'
 import { MazeGenerator } from '../utils/randomMazeGenerator'
 import { useRef } from "react";

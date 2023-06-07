@@ -13,6 +13,8 @@ import { TouchInput } from './TouchInput'
 import { useGameContext } from '../contexts/GameContext'
 import { useNavigate } from 'react-router-dom'
 import { useGraphicContext } from '../contexts/GraphicContext'
+import { Starter } from './Starter'
+import { GraphicSettings } from './GraphicSettings'
 
 export function GameView({ mazeMatrix, params }) {
   const isTouch = window.navigator.maxTouchPoints > 0
@@ -27,7 +29,7 @@ export function GameView({ mazeMatrix, params }) {
   const [isHold, setIsHold] = useState(true)
 
   const { timing, movePlayerRot, moveCameraPosYZ, isWinning } = useGameContext()
-  const { dpr } = useGraphicContext()
+  const { dpr, antialias } = useGraphicContext()
 
   const playerRef = useRef(null)
   const cameraRef = useRef(null)
@@ -125,7 +127,7 @@ export function GameView({ mazeMatrix, params }) {
   return (
     <>
       <div id='canvas-container' onClick={handleArrow}>
-        <Canvas ref={mouseControl} gl={{ antialias: true }} dpr={dpr} >
+        <Canvas ref={mouseControl} gl={{ antialias: antialias }} dpr={dpr} >
           <ambientLight intensity={0.7} />
           <pointLight position={[10000, 1000, 10000]} intensity={0.9} />
           <pointLight position={[10000, 0, -10000]} intensity={0.4} />
@@ -147,7 +149,7 @@ export function GameView({ mazeMatrix, params }) {
       <div id='crosshair'>+</div>
       {isTouch && <TouchInput moveSetter={move} setRotateRate={rotate}
         arrowFunc={handleArrow} />}
-      {(isHold && !isTouch && !isWinning) && <div id='starter' className='dialog-box'>
+      {(isHold && !isTouch && !isWinning) && <Starter>
         <div className='dialog-message'>
           <h1>How to Play</h1>
           <div>Start from entrance in the northwest and find the correct route to exit in the southeast</div>
@@ -162,8 +164,9 @@ export function GameView({ mazeMatrix, params }) {
           </ul>
           <p>Click 'Play' to start!</p>
         </div>
-        <div onClick={playGame} className='dialog-btn big-txt'>Play</div>
-      </div>}
+        <GraphicSettings />
+        <button onClick={playGame} className='dialog-btn big-txt'>Play</button>
+      </Starter>}
       {isWinning && <div id='win-message' className='dialog-box'>
         <div className='dialog-message'>
           <h1>Congratulation!</h1>
@@ -171,9 +174,9 @@ export function GameView({ mazeMatrix, params }) {
           <div ref={timerRef} className='center big-txt'>{timeDisplay.current}</div>
         </div>
         {isTouch ?
-          <div onClick={() => navigate(-2)} className='dialog-btn big-txt'>Go Home</div>
+          <button onClick={() => navigate(-2)} className='dialog-btn big-txt'>Go Home</button>
           :
-          <div onClick={() => navigate(-1)} className='dialog-btn big-txt'>Go Home</div>
+          <button onClick={() => navigate(-1)} className='dialog-btn big-txt'>Go Home</button>
         }
       </div>}
     </>

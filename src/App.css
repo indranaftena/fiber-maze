@@ -228,7 +228,6 @@ footer {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
 .dialog-message::-webkit-scrollbar {
   display: none;
 }
@@ -238,11 +237,13 @@ footer {
   /* padding-right: 1rem;
   vertical-align: bottom; */
 }
+.dialog-message label {
+  margin-top: 2rem;
+}
 
 #starter {
   background-color: rgba(70, 70, 70, 0.7);
   padding-bottom: 10%;
-  backdrop-filter: blur(4px);
 }
 
 #starter .nav {
@@ -258,17 +259,21 @@ footer {
   list-style: none;
 }
 
-#starter .nav>li {
+#starter .nav button {
   padding: 0.5rem 0;
-  height: 100%;
-  width: 50%;
-  text-align: center;
-  background-color: black;
+  width: 50vw;
+  border: none;
+  border-radius: 0;
   font-style: italic;
 }
-
-#starter .nav>li.active {
+#starter .nav button.active {
   background-color: transparent;
+}
+#starter .nav button:focus {
+  outline: none;
+}
+#starter .nav button:hover {
+  border: none;
 }
 
 #win-message {
@@ -277,10 +282,8 @@ footer {
 }
 
 .dialog-btn {
-  width: fit-content;
+  display: block;
   margin: 1rem auto;
   padding: 6px 3rem;
-  color: white;
   background-color: darkgoldenrod;
-  cursor: pointer;
 }

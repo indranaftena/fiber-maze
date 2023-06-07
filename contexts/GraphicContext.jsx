@@ -13,14 +13,24 @@ export function GraphicProvider({ children }) {
         if (localDpr == null) return 1
         return JSON.parse(localDpr)
     })
-
     useEffect(() => {
         localStorage.setItem("DPR", JSON.stringify(dpr))
     }, [dpr])
 
+    const [antialias, setAntialias] = useState(() => {
+        const localAnti = localStorage.getItem("ANTIALIAS")
+        if (localAnti == null) return true
+        return JSON.parse(localAnti)
+    })
+    useEffect(() => {
+        localStorage.setItem("ANTIALIAS", JSON.stringify(antialias))
+    }, [antialias])
+
     const value = {
         dpr,
-        setDpr
+        setDpr,
+        antialias,
+        setAntialias
     }
 
     return (
